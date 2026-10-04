@@ -14,6 +14,8 @@
 - 8 个 Swift 文件通过 tree-sitter Swift 语法解析；这不等于 Apple SDK 的类型检查。
 - 构建 shell 脚本语法、Python 打包脚本语法与 Info.plist 结构。
 
+云端模拟器构建只验证 runner 对应的架构（Apple Silicon 为 ARM64，Intel 为 x86_64）；Xcode 与 Rust 静态库使用相同架构。iPhone 包单独构建 ARM64。
+
 尚未完成，不能据此宣称已成功安装：
 
 - macOS/Xcode 的 Swift 类型检查、UIKit 编译与最终系统框架链接。

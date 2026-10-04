@@ -12,10 +12,17 @@ command -v cargo >/dev/null || { echo "请先安装 Rust: https://rustup.rs" >&2
 command -v xcodegen >/dev/null || { echo "请先运行 brew install xcodegen" >&2; exit 1; }
 xcodebuild -version
 if [[ "$mode" == "simulator" ]]; then
-  if [[ "$(uname -m)" == "arm64" ]]; then target="aarch64-apple-ios-sim"; else target="x86_64-apple-ios"; fi
+  if [[ "$(uname -m)" == "arm64" ]]; then
+    target="aarch64-apple-ios-sim"
+    architecture="arm64"
+  else
+    target="x86_64-apple-ios"
+    architecture="x86_64"
+  fi
   destination="generic/platform=iOS Simulator"
 else
   target="aarch64-apple-ios"
+  architecture="arm64"
   destination="generic/platform=iOS"
 fi
 rustup target add "$target"
@@ -29,6 +36,7 @@ cp "target/$target/release/libqingjian_ios.a" ios/Libraries/
 xcodegen generate --spec ios/project.yml
 xcodebuild -project ios/PersonalKeyboard.xcodeproj -scheme PersonalKeyboard \
   -configuration Release -destination "$destination" -derivedDataPath "build/$mode" \
+  ARCHS="$architecture" ONLY_ACTIVE_ARCH=YES \
   CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
 if [[ "$mode" == "device" ]]; then
   mkdir -p build/package/Payload
