@@ -15,7 +15,9 @@
 
 ## 当前验证范围
 
-查看 `VALIDATION.md`。Rust 核心、FFI 和随包资源已有可运行测试；iOS ARM64 核心已交叉编译为静态库，包含在 `ios/Libraries/`。UIKit/Swift 和系统键盘启用、签名、实际内存占用必须在 macOS/Xcode 与 iPhone 上继续验证。
+查看 `VALIDATION.md`。Rust 核心、FFI 和随包资源测试已通过；云端 macOS/Xcode 的 ARM64 模拟器与 iPhone 版本均已编译、链接成功，并生成约 4 MiB 的未签名 IPA。已检查包内主 App、键盘扩展、离线词库和 iPhone ARM64 可执行文件。系统键盘启用、免费签名与实际内存占用仍需在自己的 iPhone 上验证。
+
+成功编译记录：<https://github.com/ryf321/personal-ios-keyboard/actions/runs/37204153245>。`ios/Libraries/` 中的静态库在构建时生成，不纳入 Git。
 
 **源码 ZIP 不能直接安装到 iPhone。未签名的 IPA 也需要自己的 Apple 账号签名。不要把它误认为已完成安装。**
 

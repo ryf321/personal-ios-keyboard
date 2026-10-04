@@ -4,7 +4,7 @@
 
 Windows 不能用 Xcode 本地编译本工程，但可以从免费的云端 macOS runner 下载编译产物，再在 Windows 用自己的 Apple 账号签名。
 
-这份文件是工程的安装流程，不代表已有可用 IPA。当前需要先成功完成一次 macOS 编译和真机验证。源码压缩包不能直接装到 iPhone。
+本仓库已于 2026-10-04 成功编译模拟器与 iPhone 版本，并生成未签名 IPA；编译记录：<https://github.com/ryf321/personal-ios-keyboard/actions/runs/37204153245>。安装包还需要自己的 Apple 账号签名和真机试用。源码压缩包不能直接装到 iPhone。
 
 ## 第一步：建立自己的 GitHub 仓库
 
@@ -31,12 +31,13 @@ Windows 不能用 Xcode 本地编译本工程，但可以从免费的云端 macO
 
 官方指引：<https://faq.altstore.io/altstore-classic/how-to-install-altstore-windows>
 
-1. 按官方指引安装所需的 Apple iTunes/iCloud 组件和 AltServer。选择免费 **AltStore Classic** 路线。
+1. 按官方指引下载并安装 Apple 提供的 iTunes、iCloud 和免费的 AltServer；使用 **AltStore Classic** 路线。通常 Windows 电脑选 64 位 iTunes。下载 AltServer 后解压 ZIP，运行 `Setup.exe`，再从 Windows 搜索中以管理员身份运行 AltServer。
 2. iPhone 用数据线连接 Windows，解锁，选择「信任这台电脑」。
-3. 从 Windows 任务栏 AltServer 菜单选择 **Install AltStore → 你的 iPhone**。
-4. 自己在 AltServer 中登录 Apple 账号；不需要把密码提供给聊天、源码仓库或编译流程。
-5. iPhone 设置 → 通用 → VPN 与设备管理，信任自己的开发者身份。
-6. 按系统提示开启开发者模式（设置 → 隐私与安全 → 开发者模式，可能需要重启）。
+3. 打开 iTunes，登录自己的 Apple 账号并启用设备的「Wi-Fi 同步」。
+4. 从 Windows 任务栏 AltServer 菜单选择 **Install AltStore → 你的 iPhone**。
+5. 自己在 AltServer 中登录 Apple 账号；不需要把密码提供给聊天、源码仓库或编译流程。
+6. iPhone 设置 → 通用 → VPN 与设备管理，信任自己的开发者身份。
+7. 按系统提示开启开发者模式（设置 → 隐私与安全 → 开发者模式，可能需要重启）。
 
 ## 第四步：导入自己的 IPA
 
