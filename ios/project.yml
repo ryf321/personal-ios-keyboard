@@ -1,0 +1,56 @@
+name: PersonalKeyboard
+options:
+  bundleIdPrefix: org.personal.suixue
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    CLANG_ENABLE_MODULES: YES
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  PersonalKeyboard:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+        excludes: [Info.plist]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.personal.suixue.keyboard
+        INFOPLIST_FILE: App/Info.plist
+    dependencies:
+      - target: PersonalKeyboardExtension
+        embed: true
+  PersonalKeyboardExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Keyboard
+        excludes: [Info.plist]
+      - path: Shared
+      - path: Resources
+        excludes: ["*.tsv"]
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.personal.suixue.keyboard.extension
+        INFOPLIST_FILE: Keyboard/Info.plist
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SWIFT_OBJC_BRIDGING_HEADER: Shared/QingjianBridge.h
+        LIBRARY_SEARCH_PATHS: ["$(inherited)", "$(SRCROOT)/Libraries"]
+        OTHER_LDFLAGS: ["$(inherited)", "-lqingjian_ios", "-liconv", "-lz"]
+        SKIP_INSTALL: YES
+schemes:
+  PersonalKeyboard:
+    build:
+      targets:
+        PersonalKeyboard: all
+    run:
+      config: Debug

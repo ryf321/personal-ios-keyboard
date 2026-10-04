@@ -1,0 +1,6 @@
+/target/
+/build/
+/ios/Libraries/
+/ios/PersonalKeyboard.xcodeproj/
+/ios/Resources/*.qj
+.DS_Store

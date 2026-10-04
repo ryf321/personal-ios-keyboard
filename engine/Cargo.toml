@@ -1,0 +1,19 @@
+[package]
+name = "qingjian-ios"
+version = "0.1.0-dev"
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["staticlib", "rlib"]
+
+[lints]
+workspace = true
+
+[dependencies]
+qingjian-core.workspace = true
+qingjian-dictionary.workspace = true
+qingjian-format.workspace = true
+qingjian-translate.workspace = true
+serde.workspace = true
+serde_json.workspace = true

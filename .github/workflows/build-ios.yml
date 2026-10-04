@@ -1,0 +1,38 @@
+name: Build personal iOS keyboard
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: personal-ios-keyboard-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install free build tools
+        run: |
+          brew install xcodegen
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          "$HOME/.cargo/bin/rustup" component add rustfmt clippy
+      - name: Core and bridge checks
+        run: |
+          python3 scripts/prepare_resources.py
+          cargo run --locked -p qingjian-ios --bin pack -- ios/Resources
+          cargo test --locked -p qingjian-ios
+          cargo fmt -p qingjian-ios --check
+          cargo clippy --locked -p qingjian-ios --all-targets -- -D warnings
+      - name: Build simulator to verify Swift and extension
+        run: bash scripts/build.sh simulator
+      - name: Build iPhone package without signing
+        run: bash scripts/build.sh device
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PersonalKeyboard-unsigned-ipa
+          path: build/PersonalKeyboard-unsigned.ipa
+          retention-days: 3
